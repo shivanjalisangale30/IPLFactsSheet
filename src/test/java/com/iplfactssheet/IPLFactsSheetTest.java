@@ -1,5 +1,6 @@
 package com.iplfactssheet;
 
+import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -81,4 +82,16 @@ public class IPLFactsSheetTest {
         }
     }
 
+    @Test
+    public void givenIPLFactsSheetOfMostRunsFile_WhenSortedOnAverage_ShouldReturnTopBattingAvearages() {
+        try {
+            IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE);
+            IPLRunsCSV[] iplRunsCSV = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("Ishant Sharma",iplRunsCSV[0].player);
+        } catch (IPLFactAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }

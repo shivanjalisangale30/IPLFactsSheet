@@ -7,16 +7,30 @@ public class IPLRunsCSV {
     public String player;
 
     @CsvBindByName(column = "Mat", required = true)
-    public int matchs;
+    public String matchs;
 
     @CsvBindByName(column = "Inns", required = true)
-    public int innings;
+    public String innings;
 
     @CsvBindByName(column = "Runs", required = true)
-    public int runs;
+    public String runs;
 
     @CsvBindByName(column = "Avg", required = true)
     public String average;
+
+    public IPLRunsCSV() {
+    }
+
+    public IPLRunsCSV(String player, String matchs, String innings, String runs, String average) {
+        this.player = player;
+        this.matchs = matchs;
+        this.innings = innings;
+        this.runs = runs;
+        this.average = average;
+    }
+
+    public IPLRunsCSV(String player, double average, int runs, int matchs, int innings) {
+    }
 
     @Override
     public String toString() {
