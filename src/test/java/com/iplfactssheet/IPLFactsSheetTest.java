@@ -28,4 +28,14 @@ public class IPLFactsSheetTest {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
         }
     }
+
+    @Test
+    public void givenEmptyFile_ShouldHandleException() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBattingTeamData(EMPTY_FILE);
+        } catch (IPLFactAnalyserException e) {
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
+        }
+    }
 }
