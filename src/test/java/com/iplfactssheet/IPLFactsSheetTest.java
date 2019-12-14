@@ -10,7 +10,7 @@ public class IPLFactsSheetTest {
     String DELIMETER_BATTING_FILE = "/home/admin1/Desktop/IPL/src/test/resources/Delimeter_Issue_Runs.csv";
 
     @Test
-    public void givenIPLFactsSheetOfMostRuns_WhenProper_ShouldGiveCorrectCount() {
+    public void givenIPLFactsSheetOfMostRunsFile_WhenProper_ShouldGiveCorrectCount() {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             int result = iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
@@ -34,6 +34,16 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             iplFactAnalyserTeam.loadBattingTeamData(EMPTY_FILE);
+        } catch (IPLFactAnalyserException e) {
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
+        }
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostRunsFile_WhenDelimeterIssue_ShouldHandleException() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBattingTeamData(DELIMETER_BATTING_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
         }
