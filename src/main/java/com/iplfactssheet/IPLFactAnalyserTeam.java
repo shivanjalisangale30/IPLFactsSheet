@@ -23,6 +23,9 @@ public class IPLFactAnalyserTeam {
         } catch (IOException | CSVBuilderException e) {
             throw new IPLFactAnalyserException(e.getMessage(),
                     IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
+        }catch (RuntimeException e){
+            throw new IPLFactAnalyserException(e.getMessage(),
+                    IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE);
         }
     }
 }
