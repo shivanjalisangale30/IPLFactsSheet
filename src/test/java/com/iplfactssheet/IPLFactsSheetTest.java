@@ -18,8 +18,9 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             int result = iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
-            Assert.assertEquals(101, result);
+            Assert.assertEquals(100, result);
         } catch (IPLFactAnalyserException e) {
+            e.printStackTrace();
         }
     }
 
@@ -59,7 +60,8 @@ public class IPLFactsSheetTest {
         try {
             iplFactAnalyserTeam.loadBattingTeamData(HEADER_BATTING_FILE);
         } catch (IPLFactAnalyserException e) {
-            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type); }
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
+        }
     }
 
     @Test
@@ -89,9 +91,41 @@ public class IPLFactsSheetTest {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE);
             IPLRunsCSV[] iplRunsCSV = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
-            Assert.assertEquals("Ishant Sharma",iplRunsCSV[0].player);
+            Assert.assertEquals("MS Dhoni", iplRunsCSV[0].player);
+        } catch (IPLFactAnalyserException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostRunsFile_WhenSortedOnAverage_ShouldReturnLeastBattingAvearages() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE);
+            IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("Harpreet Brar", iplRunsCSVS[iplRunsCSVS.length - 1].player);
+        } catch (IPLFactAnalyserException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostRunnsFile_WhenSortedOnStrikingRates_ShouldReturnTopStrikingRates() {
+        try {
+            IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKINGRATES);
+            IPLRunsCSV[] iplRunsCSV = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("Ishant Sharma", iplRunsCSV[0].player);
+        } catch (IPLFactAnalyserException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostRunnsFile_WhenSortedOnStrikingRates_ShouldReturnLeastStrikingRates() {
+        try {
+            IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKINGRATES);
+            IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("Bhuvneshwar Kumar", iplRunsCSVS[iplRunsCSVS.length - 1].player);
         } catch (IPLFactAnalyserException e) {
-            e.printStackTrace();
         }
     }
 }
