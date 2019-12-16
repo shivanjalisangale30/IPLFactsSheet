@@ -128,4 +128,17 @@ public class IPLFactsSheetTest {
         } catch (IPLFactAnalyserException e) {
         }
     }
+
+    @Test
+    public void givenIPLFactsSheetsOfMostRunnsFile_WhenCompareSixAndFour_ShouldReturnMaximumSixAndFourPlayer() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SIXANDFOUR);
+            IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("Andre Russell",iplRunsCSVS[0].player);
+        } catch (IPLFactAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
 }
