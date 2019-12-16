@@ -227,4 +227,14 @@ public class IPLFactsSheetTest {
             Assert.assertEquals(101,result);
         } catch (IPLFactAnalyserException e) {}
     }
+
+    @Test
+    public void givenNoFile_WhenShouldHandleException() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBallingTeamData("");
+        } catch (IPLFactAnalyserException e) {
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
+        }
+    }
 }
