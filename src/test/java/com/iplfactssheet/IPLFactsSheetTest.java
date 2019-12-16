@@ -1,6 +1,7 @@
 package com.iplfactssheet;
 
 import com.google.gson.Gson;
+import com.sun.org.apache.xml.internal.dtm.ref.sax2dtm.SAX2RTFDTM;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,12 +11,14 @@ public class IPLFactsSheetTest {
     String EMPTY_FILE = "/home/admin1/Desktop/IPL/src/test/resources/EmptyFile.csv";
     String DELIMETER_BATTING_FILE = "/home/admin1/Desktop/IPL/src/test/resources/Delimeter_Issue_Runs.csv";
     String HEADER_BATTING_FILE = "/home/admin1/Desktop/IPL/src/test/resources/Header_Issue_Runs.csv";
-    String FILE_TYPE_NOT_SUPPORTED = "/home/admin1/Desktop/IPL/src/test/resources/IPL2019FactsheetMostRuns.json";
-    String FILE_PATH_INCORRECT = "/home/admin1/Desktop/IPL/src/main/resources/IPL2019FactsheetMostRuns.csv";
+    String BATTING_FILE_TYPE_NOT_SUPPORTED = "/home/admin1/Desktop/IPL/src/test/resources/IPL2019FactsheetMostRuns.json";
+    String BATTING_FILE_PATH_INCORRECT = "/home/admin1/Desktop/IPL/src/main/resources/IPL2019FactsheetMostRuns.csv";
 
     String IPL_BALLING_TEAM = "/home/admin1/Desktop/IPL/src/test/resources/IPL2019FactsheetMostWkts.csv";
     String DELIMETER_BALLING_FILE = "/home/admin1/Desktop/IPL/src/test/resources/Delimeter_Issue_Wkts.csv";
     String HEADER_BALLING_FILE = "/home/admin1/Desktop/IPL/src/test/resources/Header_Issue_wkts.csv";
+    String BALLING_FILE_TYPE_NOT_SUPPORTED = "/home/admin1/Desktop/IPL/src/test/resources/IPL2019FactsheetMostWkts.json";
+    String BALLING_FILE_PATH_INCORRECT = "/home/admin1/Desktop/IPL/src/main/resources/IPL2019FactsheetMostWkts.csv";
 
     @Test
     public void givenIPLFactsSheetOfMostRunsFile_WhenProper_ShouldGiveCorrectCount() {
@@ -72,7 +75,7 @@ public class IPLFactsSheetTest {
     public void givenIPLFactsSheetOfMostRunsFile_WhenGivenFileTypeIsNotSupported_ShouldHandleException() {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(FILE_TYPE_NOT_SUPPORTED);
+            iplFactAnalyserTeam.loadBattingTeamData(BATTING_FILE_TYPE_NOT_SUPPORTED);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
         }
@@ -82,7 +85,7 @@ public class IPLFactsSheetTest {
     public void givenIPLFactsSheetOfMostRunsFile_WhenFilePathIsIncorrect_ShouldHandleException() {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(FILE_PATH_INCORRECT);
+            iplFactAnalyserTeam.loadBattingTeamData(BATTING_FILE_PATH_INCORRECT);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
         }
@@ -267,6 +270,26 @@ public class IPLFactsSheetTest {
             iplFactAnalyserTeam.loadBallingTeamData(HEADER_BALLING_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE,e.type);
+        }
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostWktsFile_WhenGivenFileTypeIsNotSupported_ShouldHandleException() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBallingTeamData(BALLING_FILE_TYPE_NOT_SUPPORTED);
+        } catch (IPLFactAnalyserException e) {
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
+        }
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostWktsFile_WhenFilePathIsIncorrect_ShouldHandleException() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBallingTeamData(BALLING_FILE_PATH_INCORRECT);
+        } catch (IPLFactAnalyserException e) {
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
         }
     }
 }
