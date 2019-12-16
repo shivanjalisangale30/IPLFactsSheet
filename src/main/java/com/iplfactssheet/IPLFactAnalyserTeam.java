@@ -26,8 +26,12 @@ public class IPLFactAnalyserTeam {
 
         Comparator<IplRunnsDao> numberOfSix = Comparator.comparing(comparatorHashMap -> comparatorHashMap.six,Comparator.reverseOrder());
         Comparator<IplRunnsDao> numberOfFour = Comparator.comparing(comparatorHashMap -> comparatorHashMap.four,Comparator.reverseOrder());
-        Comparator<IplRunnsDao> result = numberOfSix.thenComparing(numberOfFour);
-        this.comparatorHashMap.put(SortFieldIplRunns.SIXANDFOUR, result);
+        Comparator<IplRunnsDao> highSixFour = numberOfSix.thenComparing(numberOfFour);
+        this.comparatorHashMap.put(SortFieldIplRunns.SIXANDFOUR, highSixFour);
+
+        Comparator<IplRunnsDao> highStrikingRates = Comparator.comparing(comparatorHashMap -> comparatorHashMap.strikingRates,Comparator.reverseOrder());
+        Comparator<IplRunnsDao> strikingRatesWithSixFour = highSixFour.thenComparing(highStrikingRates);
+        this.comparatorHashMap.put(SortFieldIplRunns.SRTIKINGRATESWITHSIXFOUR,strikingRatesWithSixFour);
     }
 
     public int loadBattingTeamData(String csvFilePath) throws IPLFactAnalyserException {

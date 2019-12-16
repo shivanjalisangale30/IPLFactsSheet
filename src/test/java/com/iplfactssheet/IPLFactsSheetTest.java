@@ -130,15 +130,46 @@ public class IPLFactsSheetTest {
     }
 
     @Test
-    public void givenIPLFactsSheetsOfMostRunnsFile_WhenCompareSixAndFour_ShouldReturnMaximumSixAndFourPlayer() {
+    public void givenIPLFactsSheetsOfMostRunnsFile_WhenCompareSixAndFour_ShouldReturnPlayerHitMaximumSixAndFour() {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SIXANDFOUR);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("Andre Russell",iplRunsCSVS[0].player);
-        } catch (IPLFactAnalyserException e) {
-            e.printStackTrace();
-        }
+        } catch (IPLFactAnalyserException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetsOfMostRunnsFile_WhenCompareSixAndFour_ShouldReturnPlayerHitMinimumSixAndFour() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SIXANDFOUR);
+            IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("Shakib Al Hasan",iplRunsCSVS[iplRunsCSVS.length-1].player);
+        } catch (IPLFactAnalyserException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostRunnsFile_WhenCompareStrikingRatesAndSixFour_ShouldReturnPalyerMaximumStrikingRatesWithSixFour() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SRTIKINGRATESWITHSIXFOUR);
+            IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("Andre Russell",iplRunsCSVS[0].player);
+        } catch (IPLFactAnalyserException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetsOfMostRunnsFile_WhenCompareStrikingRatesAndSixFour_ShouldReturnPlayerMinimumStrikingRatesWithSixFour() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SRTIKINGRATESWITHSIXFOUR);
+            IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("Shakib Al Hasan",iplRunsCSVS[iplRunsCSVS.length-1].player);
+        } catch (IPLFactAnalyserException e) {}
     }
 }
