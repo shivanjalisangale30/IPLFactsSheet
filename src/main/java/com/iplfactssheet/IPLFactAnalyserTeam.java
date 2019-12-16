@@ -26,16 +26,19 @@ public class IPLFactAnalyserTeam {
         Comparator<IplRunnsDao> highSix = Comparator.comparing(iplRunnsDao -> iplRunnsDao.six, Comparator.reverseOrder());
         Comparator<IplRunnsDao> highFour = Comparator.comparing(iplRunnsDao -> iplRunnsDao.four, Comparator.reverseOrder());
         Comparator<IplRunnsDao> highStrikingRates = Comparator.comparing(iplRunnsDao -> iplRunnsDao.strikingRates, Comparator.reverseOrder());
+        Comparator<IplRunnsDao> highRun = Comparator.comparing(iplRunnsDao -> iplRunnsDao.runs,Comparator.reverseOrder());
 
         Comparator<IplRunnsDao> highSixFour = highSix.thenComparing(highFour);
         Comparator<IplRunnsDao> strikingRatesWithSixFour = highStrikingRates.thenComparing(highSixFour);
         Comparator<IplRunnsDao> highAverageWithStrikingRates = highAverage.thenComparing(highStrikingRates);
+        Comparator<IplRunnsDao> highRunAverage = highRun.thenComparing(highAverage);
 
         this.comparatorHashMap.put(SortFieldIplRunns.AVERAGE, highAverage);
         this.comparatorHashMap.put(SortFieldIplRunns.STRIKINGRATES, highStrikingRates);
         this.comparatorHashMap.put(SortFieldIplRunns.SIXANDFOUR, highSixFour);
         this.comparatorHashMap.put(SortFieldIplRunns.SRTIKINGRATESWITHSIXFOUR, strikingRatesWithSixFour);
         this.comparatorHashMap.put(SortFieldIplRunns.AVERAGESTRIKINGRATES, highAverageWithStrikingRates);
+        this.comparatorHashMap.put(SortFieldIplRunns.RUNSAVERAGE,highRunAverage);
     }
 
     public int loadBattingTeamData(String csvFilePath) throws IPLFactAnalyserException {

@@ -194,4 +194,26 @@ public class IPLFactsSheetTest {
             Assert.assertEquals("Tim Southee",iplRunsCSVS[iplRunsCSVS.length-1].player);
         } catch (IPLFactAnalyserException e) {}
     }
+
+    @Test
+    public void givenIPLFactsSheetMostOfRunnsFile_WhenCompareRunsAndAverage_ShouldReturnPlayerMaximumRunWithAverage() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.RUNSAVERAGE);
+            IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("David Warner",iplRunsCSVS[0].player);
+        } catch (IPLFactAnalyserException e) {}
+    }
+
+    @Test
+    public void givenIPLFatcsSheetsMostOfRunnsFile_WhenCompareRunsAndAverage_ShouldReturnPlayerMinimumRunWithAverage() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.RUNSAVERAGE);
+            IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("Tim Southee",iplRunsCSVS[iplRunsCSVS.length-1].player);
+        } catch (IPLFactAnalyserException e) {}
+    }
 }
