@@ -15,6 +15,7 @@ public class IPLFactsSheetTest {
 
     String IPL_BALLING_TEAM = "/home/admin1/Desktop/IPL/src/test/resources/IPL2019FactsheetMostWkts.csv";
     String DELIMETER_BALLING_FILE = "/home/admin1/Desktop/IPL/src/test/resources/Delimeter_Issue_Wkts.csv";
+    String HEADER_BALLING_FILE = "/home/admin1/Desktop/IPL/src/test/resources/Header_Issue_wkts.csv";
 
     @Test
     public void givenIPLFactsSheetOfMostRunsFile_WhenProper_ShouldGiveCorrectCount() {
@@ -254,6 +255,16 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             iplFactAnalyserTeam.loadBallingTeamData(DELIMETER_BALLING_FILE);
+        } catch (IPLFactAnalyserException e) {
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE,e.type);
+        }
+    }
+
+    @Test
+    public void givenIPLFactSheetsOfMostWktsFile_WhenHeaderIssue_ShouldHandleException() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBallingTeamData(HEADER_BALLING_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE,e.type);
         }
