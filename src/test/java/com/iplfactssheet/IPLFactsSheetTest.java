@@ -158,7 +158,7 @@ public class IPLFactsSheetTest {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SRTIKINGRATESWITHSIXFOUR);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
-            Assert.assertEquals("Andre Russell",iplRunsCSVS[0].player);
+            Assert.assertEquals("Ishant Sharma",iplRunsCSVS[0].player);
         } catch (IPLFactAnalyserException e) {}
     }
 
@@ -169,7 +169,29 @@ public class IPLFactsSheetTest {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SRTIKINGRATESWITHSIXFOUR);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
-            Assert.assertEquals("Shakib Al Hasan",iplRunsCSVS[iplRunsCSVS.length-1].player);
+            Assert.assertEquals("Bhuvneshwar Kumar",iplRunsCSVS[iplRunsCSVS.length-1].player);
+        } catch (IPLFactAnalyserException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetsOfMostRunnsFile_WhenCompareAveargeAndStrikingRates_ShouldReturnPlayerMaximumAveargeWithStrikingRates() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGESTRIKINGRATES);
+            IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("MS Dhoni",iplRunsCSVS[0].player);
+        } catch (IPLFactAnalyserException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostRunnsFile_WhenCompareAverageWithStrikinhRates_ShouldReturnPlayerMinimumAveargeWithStrikingRates() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGESTRIKINGRATES);
+            IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
+            Assert.assertEquals("Tim Southee",iplRunsCSVS[iplRunsCSVS.length-1].player);
         } catch (IPLFactAnalyserException e) {}
     }
 }
