@@ -16,12 +16,18 @@ import java.util.stream.StreamSupport;
 public class IPLFactAnalyserTeam {
 
     HashMap<String, IplRunnsDao> iplRunsCSVHashMap = null;
-    HashMap<SortFieldIplRunns, Comparator<IplRunnsDao>> sortFieldIplRunnsComparatorHashMap = null;
+    HashMap<SortFieldIplRunns, Comparator<IplRunnsDao>> comparatorHashMap = null;
 
     public IPLFactAnalyserTeam() {
         this.iplRunsCSVHashMap = new HashMap<String, IplRunnsDao>();
-        this.sortFieldIplRunnsComparatorHashMap = new HashMap<>();
-        this.sortFieldIplRunnsComparatorHashMap.put(SortFieldIplRunns.AVERAGE, Comparator.comparing(iplRunsCSV -> iplRunsCSV.average));
+        this.comparatorHashMap = new HashMap<>();
+        this.comparatorHashMap.put(SortFieldIplRunns.AVERAGE, Comparator.comparing(iplRunnsDao -> iplRunnsDao.average, Comparator.reverseOrder()));
+        this.comparatorHashMap.put(SortFieldIplRunns.STRIKINGRATES, Comparator.comparing(iplRunnsDao -> iplRunnsDao.strikingRates, Comparator.reverseOrder()));
+
+        Comparator<IplRunnsDao> numberOfSix = Comparator.comparing(comparatorHashMap -> comparatorHashMap.six,Comparator.reverseOrder());
+        Comparator<IplRunnsDao> numberOfFour = Comparator.comparing(comparatorHashMap -> comparatorHashMap.four,Comparator.reverseOrder());
+        Comparator<IplRunnsDao> result = numberOfSix.thenComparing(numberOfFour);
+        this.comparatorHashMap.put(SortFieldIplRunns.SIXANDFOUR, result);
     }
 
     public int loadBattingTeamData(String csvFilePath) throws IPLFactAnalyserException {
@@ -48,7 +54,7 @@ public class IPLFactAnalyserTeam {
                     IPLFactAnalyserException.ExceptionType.NO_CENSUS_DATA);
         }
         ArrayList censusDTO = iplRunsCSVHashMap.values().stream()
-                .sorted(this.sortFieldIplRunnsComparatorHashMap.get(sortBy))
+                .sorted(this.comparatorHashMap.get(sortBy))
                 .collect(Collectors.toCollection(ArrayList::new));
         String sortedJson = new Gson().toJson(censusDTO);
         return sortedJson;

@@ -1,5 +1,5 @@
 package com.iplfactssheet;
 
 public enum SortFieldIplRunns {
-     AVERAGE
+     AVERAGE,STRIKINGRATES,SIXANDFOUR
 };

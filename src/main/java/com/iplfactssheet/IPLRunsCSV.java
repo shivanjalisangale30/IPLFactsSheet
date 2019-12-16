@@ -18,28 +18,40 @@ public class IPLRunsCSV {
     @CsvBindByName(column = "Avg", required = true)
     public String average;
 
+    @CsvBindByName(column = "SR", required = true)
+    public String strikingRates;
+
+    @CsvBindByName(column = "4s", required = true)
+    public int four;
+
+    @CsvBindByName(column = "6s", required = true)
+    public int six;
+
     public IPLRunsCSV() {
     }
 
-    public IPLRunsCSV(String player, String matchs, String innings, String runs, String average) {
+    public IPLRunsCSV(String player, String matchs, String innings, String runs, String average, String strikingRates, int four, int six) {
         this.player = player;
         this.matchs = matchs;
         this.innings = innings;
         this.runs = runs;
         this.average = average;
-    }
-
-    public IPLRunsCSV(String player, double average, int runs, int matchs, int innings) {
+        this.strikingRates = strikingRates;
+        this.four = four;
+        this.six = six;
     }
 
     @Override
     public String toString() {
         return "IPLRunsCSV{" +
                 "player='" + player + '\'' +
-                ", matchs=" + matchs +
-                ", innings=" + innings +
-                ", runs=" + runs +
-                ", average=" + average +
+                ", matchs='" + matchs + '\'' +
+                ", innings='" + innings + '\'' +
+                ", runs='" + runs + '\'' +
+                ", average='" + average + '\'' +
+                ", strikingRates='" + strikingRates + '\'' +
+                ", four=" + four +
+                ", six=" + six +
                 '}';
     }
 }
