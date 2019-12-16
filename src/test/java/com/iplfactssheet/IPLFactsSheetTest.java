@@ -14,6 +14,7 @@ public class IPLFactsSheetTest {
     String FILE_PATH_INCORRECT = "/home/admin1/Desktop/IPL/src/main/resources/IPL2019FactsheetMostRuns.csv";
 
     String IPL_BALLING_TEAM = "/home/admin1/Desktop/IPL/src/test/resources/IPL2019FactsheetMostWkts.csv";
+    String DELIMETER_BALLING_FILE = "/home/admin1/Desktop/IPL/src/test/resources/Delimeter_Issue_Wkts.csv";
 
     @Test
     public void givenIPLFactsSheetOfMostRunsFile_WhenProper_ShouldGiveCorrectCount() {
@@ -113,7 +114,7 @@ public class IPLFactsSheetTest {
         try {
             IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
-            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKINGRATES);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKING_RATES);
             IPLRunsCSV[] iplRunsCSV = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("Ishant Sharma", iplRunsCSV[0].player);
         } catch (IPLFactAnalyserException e) {}
@@ -124,7 +125,7 @@ public class IPLFactsSheetTest {
         try {
             IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
-            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKINGRATES);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKING_RATES);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("Bhuvneshwar Kumar", iplRunsCSVS[iplRunsCSVS.length - 1].player);
         } catch (IPLFactAnalyserException e) {
@@ -136,7 +137,7 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
-            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SIXANDFOUR);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SIX_AND_FOUR);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("Andre Russell",iplRunsCSVS[0].player);
         } catch (IPLFactAnalyserException e) {}
@@ -147,7 +148,7 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
-            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SIXANDFOUR);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SIX_AND_FOUR);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("Shakib Al Hasan",iplRunsCSVS[iplRunsCSVS.length-1].player);
         } catch (IPLFactAnalyserException e) {}
@@ -158,7 +159,7 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
-            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SRTIKINGRATESWITHSIXFOUR);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SRTIKING_RATES_WITH_SIX_FOUR);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("Ishant Sharma",iplRunsCSVS[0].player);
         } catch (IPLFactAnalyserException e) {}
@@ -169,7 +170,7 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
-            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SRTIKINGRATESWITHSIXFOUR);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SRTIKING_RATES_WITH_SIX_FOUR);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("Bhuvneshwar Kumar",iplRunsCSVS[iplRunsCSVS.length-1].player);
         } catch (IPLFactAnalyserException e) {}
@@ -180,7 +181,7 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
-            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGESTRIKINGRATES);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE_STRIKING_RATES);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("MS Dhoni",iplRunsCSVS[0].player);
         } catch (IPLFactAnalyserException e) {}
@@ -191,7 +192,7 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
-            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGESTRIKINGRATES);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE_STRIKING_RATES);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("Tim Southee",iplRunsCSVS[iplRunsCSVS.length-1].player);
         } catch (IPLFactAnalyserException e) {}
@@ -202,7 +203,7 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
-            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.RUNSAVERAGE);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.RUNS_AVERAGE);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("David Warner",iplRunsCSVS[0].player);
         } catch (IPLFactAnalyserException e) {}
@@ -213,7 +214,7 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
             iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
-            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.RUNSAVERAGE);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.RUNS_AVERAGE);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("Tim Southee",iplRunsCSVS[iplRunsCSVS.length-1].player);
         } catch (IPLFactAnalyserException e) {}
@@ -223,7 +224,7 @@ public class IPLFactsSheetTest {
     public void givenIPLFactsSheetMostOfWktsFile_WhenGivenProper_ShouldReturnCorrectCount() {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
         try {
-            int result = iplFactAnalyserTeam.loadBallingTeamData(IPL_BATTING_TEAM);
+            int result = iplFactAnalyserTeam.loadBallingTeamData(IPL_BALLING_TEAM);
             Assert.assertEquals(101,result);
         } catch (IPLFactAnalyserException e) {}
     }
@@ -245,6 +246,16 @@ public class IPLFactsSheetTest {
             iplFactAnalyserTeam.loadBallingTeamData(EMPTY_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
+        }
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostWktsFile_WhenDelimeterIssue_ShouldHandleException() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            iplFactAnalyserTeam.loadBallingTeamData(DELIMETER_BALLING_FILE);
+        } catch (IPLFactAnalyserException e) {
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE,e.type);
         }
     }
 }

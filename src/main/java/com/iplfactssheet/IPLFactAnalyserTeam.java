@@ -34,11 +34,11 @@ public class IPLFactAnalyserTeam {
         Comparator<IplRunnsDao> highRunAverage = highRun.thenComparing(highAverage);
 
         this.comparatorHashMap.put(SortFieldIplRunns.AVERAGE, highAverage);
-        this.comparatorHashMap.put(SortFieldIplRunns.STRIKINGRATES, highStrikingRates);
-        this.comparatorHashMap.put(SortFieldIplRunns.SIXANDFOUR, highSixFour);
-        this.comparatorHashMap.put(SortFieldIplRunns.SRTIKINGRATESWITHSIXFOUR, strikingRatesWithSixFour);
-        this.comparatorHashMap.put(SortFieldIplRunns.AVERAGESTRIKINGRATES, highAverageWithStrikingRates);
-        this.comparatorHashMap.put(SortFieldIplRunns.RUNSAVERAGE, highRunAverage);
+        this.comparatorHashMap.put(SortFieldIplRunns.STRIKING_RATES, highStrikingRates);
+        this.comparatorHashMap.put(SortFieldIplRunns.SIX_AND_FOUR, highSixFour);
+        this.comparatorHashMap.put(SortFieldIplRunns.SRTIKING_RATES_WITH_SIX_FOUR, strikingRatesWithSixFour);
+        this.comparatorHashMap.put(SortFieldIplRunns.AVERAGE_STRIKING_RATES, highAverageWithStrikingRates);
+        this.comparatorHashMap.put(SortFieldIplRunns.RUNS_AVERAGE, highRunAverage);
     }
 
     public int loadBattingTeamData(String csvFilePath) throws IPLFactAnalyserException {
