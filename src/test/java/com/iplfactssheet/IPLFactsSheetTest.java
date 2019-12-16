@@ -13,6 +13,8 @@ public class IPLFactsSheetTest {
     String FILE_TYPE_NOT_SUPPORTED = "/home/admin1/Desktop/IPL/src/test/resources/IPL2019FactsheetMostRuns.json";
     String FILE_PATH_INCORRECT = "/home/admin1/Desktop/IPL/src/main/resources/IPL2019FactsheetMostRuns.csv";
 
+    String IPL_BALLING_TEAM = "/home/admin1/Desktop/IPL/src/test/resources/IPL2019FactsheetMostWkts.csv";
+
     @Test
     public void givenIPLFactsSheetOfMostRunsFile_WhenProper_ShouldGiveCorrectCount() {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
@@ -214,6 +216,15 @@ public class IPLFactsSheetTest {
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.RUNSAVERAGE);
             IPLRunsCSV[] iplRunsCSVS = new Gson().fromJson(sortedData, IPLRunsCSV[].class);
             Assert.assertEquals("Tim Southee",iplRunsCSVS[iplRunsCSVS.length-1].player);
+        } catch (IPLFactAnalyserException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetMostOfWktsFile_WhenGivenProper_ShouldReturnCorrectCount() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        try {
+            int result = iplFactAnalyserTeam.loadBallingTeamData(IPL_BATTING_TEAM);
+            Assert.assertEquals(101,result);
         } catch (IPLFactAnalyserException e) {}
     }
 }
