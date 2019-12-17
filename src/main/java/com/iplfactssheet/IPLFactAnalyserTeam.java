@@ -44,10 +44,10 @@ public class IPLFactAnalyserTeam {
     public int loadBattingTeamData(String csvFilePath) throws IPLFactAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<IPLRunsCSV> csvFileIterartor = csvBuilder.getCSVFileIterartor(reader, IPLRunsCSV.class);
-            Iterable<IPLRunsCSV> csvIterable = () -> csvFileIterartor;
+            Iterator<IplRunsCsv> csvFileIterartor = csvBuilder.getCSVFileIterartor(reader, IplRunsCsv.class);
+            Iterable<IplRunsCsv> csvIterable = () -> csvFileIterartor;
             StreamSupport.stream(csvIterable.spliterator(), false)
-                    .map(IPLRunsCSV.class::cast)
+                    .map(IplRunsCsv.class::cast)
                     .forEach(csvIplRun -> this.iplRunsCSVHashMap.put(csvIplRun.player, new IplRunnsDao(csvIplRun)));
             return this.iplRunsCSVHashMap.size();
         } catch (IOException | CSVBuilderException e) {
@@ -74,10 +74,12 @@ public class IPLFactAnalyserTeam {
     public int loadBallingTeamData(String csvFilePath) throws IPLFactAnalyserException {
         try ( Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));){
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<IPLWktsCSV> csvFileIterartor = csvBuilder.getCSVFileIterartor(reader, IPLWktsCSV.class);
-            Iterable<IPLWktsCSV> csvIterable = () -> csvFileIterartor;
-            int result = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
-            return result;
+            Iterator<IplWktsCsv> csvFileIterartor = csvBuilder.getCSVFileIterartor(reader, IplWktsCsv.class);
+            Iterable<IplWktsCsv> csvIterable = () -> csvFileIterartor;
+            StreamSupport.stream(csvIterable.spliterator(), false)
+                    .map(IplWktsCsv.class::cast)
+                    .forEach(csvIplWkts->this.iplRunsCSVHashMap.put(csvIplWkts.player,new IplRunnsDao(csvIplWkts)));
+            return iplRunsCSVHashMap.size();
         } catch (IOException | CSVBuilderException e) {
             throw new IPLFactAnalyserException(e.getMessage(),
                     IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);

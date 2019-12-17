@@ -11,7 +11,7 @@ public class IplRunnsDao {
     public int four;
     public int six;
 
-    public IplRunnsDao(IPLRunsCSV iplRunsCSV) {
+    public IplRunnsDao(IplRunsCsv iplRunsCSV) {
         player = iplRunsCSV.player;
         matchs = Integer.parseInt(iplRunsCSV.matchs);
         innings = Integer.parseInt(iplRunsCSV.innings);
@@ -25,6 +25,18 @@ public class IplRunnsDao {
         strikingRates = Double.parseDouble(iplRunsCSV.strikingRates);
         four = iplRunsCSV.four;
         six = iplRunsCSV.six;
+    }
+
+    public IplRunnsDao(IplWktsCsv csvIplWkts) {
+        player = csvIplWkts.player;
+        matchs = csvIplWkts.matches;
+        average = csvIplWkts.average;
+        innings = csvIplWkts.innings;
+        runs = csvIplWkts.runs;
+        overs = csvIplWkts.over;
+        fourWkts = csvIplWkts.fourWkts;
+        fiveWkts = csvIplWkts.fiveWkts;
+        wkts = csvIplWkts.wkts;
     }
 
     @Override
