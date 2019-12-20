@@ -365,8 +365,8 @@ public class IPLFactsSheetTest {
         try {
             iplFactAnalyserTeam.loadIplData(IPL_BOWLING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKING_RATES_FIVE_FOUR_WKTS);
-            IplRunsCsv[] iplRunsCsvs = new Gson().fromJson(sortedData, IplRunsCsv[].class);
-            Assert.assertEquals("Krishnappa Gowtham",iplRunsCsvs[0].player);
+            IplWktsCsv[] iplWktsCsvs = new Gson().fromJson(sortedData, IplWktsCsv[].class);
+            Assert.assertEquals("Krishnappa Gowtham",iplWktsCsvs[0].player);
         } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
@@ -376,9 +376,30 @@ public class IPLFactsSheetTest {
         try {
             iplFactAnalyserTeam.loadIplData(IPL_BOWLING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKING_RATES_FIVE_FOUR_WKTS);
-            IplRunsCsv[] iplRunsCsvs = new Gson().fromJson(sortedData, IplRunsCsv[].class);
+            IplWktsCsv[] iplRunsCsvs = new Gson().fromJson(sortedData, IplWktsCsv[].class);
             Assert.assertEquals("Yusuf Pathan",iplRunsCsvs[iplRunsCsvs.length-1].player);
         } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
+    @Test
+    public void givenIPLFactsSheetOfMostWktsFile_WhenSorted_ShouldeReturnMostBowlingAverageWithStikingRates() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
+        try {
+            iplFactAnalyserTeam.loadIplData(IPL_BOWLING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE_STRIKING_RATES);
+            IplWktsCsv[] iplWktsCsvs = new Gson().fromJson(sortedData, IplWktsCsv[].class);
+            Assert.assertEquals("Krishnappa Gowtham",iplWktsCsvs[0].player);
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostWktsFile_WhenSorted_ShouldeReturnLeastBowlingAverageWithStikingRates() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
+        try {
+            iplFactAnalyserTeam.loadIplData(IPL_BOWLING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE_STRIKING_RATES);
+            IplWktsCsv[] iplWktsCsvs = new Gson().fromJson(sortedData, IplWktsCsv[].class);
+            Assert.assertEquals("Yusuf Pathan",iplWktsCsvs[iplWktsCsvs.length-1].player);
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
+    }
 }
