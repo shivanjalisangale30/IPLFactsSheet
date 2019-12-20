@@ -33,6 +33,9 @@ public class IplWktsCsv {
     @CsvBindByName(column = "SR",required = true)
     public double strikingRate;
 
+    public IplWktsCsv(String player, int matchs, int innings, double over, int runs, int wkts, double average, int fourWkts, int fiveWkts, double strikingRates) {
+    }
+
     @Override
     public String toString() {
         return "IplWktsCsv{" +

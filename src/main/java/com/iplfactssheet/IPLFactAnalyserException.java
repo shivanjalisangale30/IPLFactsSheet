@@ -3,7 +3,7 @@ package com.iplfactssheet;
 public class IPLFactAnalyserException extends Exception {
 
     enum ExceptionType {
-        CENSUS_FILE_PROBLEM,UNABLE_TO_PARSE,NO_CENSUS_DATA,SOME_FILE_ISSUE,NO_SUCH_FIELD,INVALID_COUNTRY
+        CENSUS_FILE_PROBLEM,UNABLE_TO_PARSE,NO_CENSUS_DATA,SOME_FILE_ISSUE,NO_SUCH_FIELD,INVALID_INPUT
     }
 
     ExceptionType type;

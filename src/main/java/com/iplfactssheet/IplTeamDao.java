@@ -1,6 +1,6 @@
 package com.iplfactssheet;
 
-public class IplRunnsDao {
+public class IplTeamDao {
 
     public String player;
     public int matchs;
@@ -10,8 +10,12 @@ public class IplRunnsDao {
     public double strikingRates;
     public int four;
     public int six;
+    public double over;
+    public int fourWkts;
+    public int fiveWkts;
+    public int wkts;
 
-    public IplRunnsDao(IplRunsCsv iplRunsCSV) {
+    public IplTeamDao(IplRunsCsv iplRunsCSV) {
         player = iplRunsCSV.player;
         matchs = Integer.parseInt(iplRunsCSV.matchs);
         innings = Integer.parseInt(iplRunsCSV.innings);
@@ -27,30 +31,22 @@ public class IplRunnsDao {
         six = iplRunsCSV.six;
     }
 
-    public IplRunnsDao(IplWktsCsv csvIplWkts) {
+    public IplTeamDao(IplWktsCsv csvIplWkts) {
         player = csvIplWkts.player;
         matchs = csvIplWkts.matches;
         average = csvIplWkts.average;
         innings = csvIplWkts.innings;
         runs = csvIplWkts.runs;
-        overs = csvIplWkts.over;
+        over = csvIplWkts.over;
         fourWkts = csvIplWkts.fourWkts;
         fiveWkts = csvIplWkts.fiveWkts;
         wkts = csvIplWkts.wkts;
     }
 
-    @Override
-    public String toString() {
-        return "IplRunnsDao{" +
-                "player='" + player + '\'' +
-                ", matchs=" + matchs +
-                ", innings=" + innings +
-                ", runs=" + runs +
-                ", average=" + average +
-                ", strikingRates=" + strikingRates +
-                ", four=" + four +
-                ", six=" + six +
-                '}';
+
+    public Object getDTO(IPLFactAnalyserTeam.IPLTeams iplTeams) {
+        if(iplTeams.equals(IPLFactAnalyserTeam.IPLTeams.BATTING))
+            return new IplRunsCsv(player,  matchs,  innings, runs, average, strikingRates, four,six);
+        return new IplWktsCsv(player,matchs,innings,over,runs,wkts,average,fourWkts,fiveWkts,strikingRates);
     }
 }
-

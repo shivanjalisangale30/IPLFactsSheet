@@ -2,36 +2,33 @@ package com.iplfactssheet;
 
 import com.google.gson.Gson;
 import csvbuilder.CSVBuilderException;
-import csvbuilder.CSVBuilderFactory;
-import csvbuilder.ICSVBuilder;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class IPLFactAnalyserTeam {
 
-    HashMap<String, IplRunnsDao> iplRunsCSVHashMap = null;
-    HashMap<SortFieldIplRunns, Comparator<IplRunnsDao>> comparatorHashMap = null;
+    public enum IPLTeams {BATTING, BOWLING};
 
-    public IPLFactAnalyserTeam() {
-        this.iplRunsCSVHashMap = new HashMap<>();
+    HashMap<String, IplTeamDao> iplCSVHashMap = null;
+    HashMap<SortFieldIplRunns, Comparator<IplTeamDao>> comparatorHashMap = null;
+    IPLTeams iplTeams;
+
+    public IPLFactAnalyserTeam(IPLTeams iplTeams) {
+        this.iplCSVHashMap = new HashMap<>();
         this.comparatorHashMap = new HashMap<>();
+        this.iplTeams = iplTeams;
 
-        Comparator<IplRunnsDao> highAverage = Comparator.comparing(iplRunnsDao -> iplRunnsDao.average, Comparator.reverseOrder());
-        Comparator<IplRunnsDao> highSix = Comparator.comparing(iplRunnsDao -> iplRunnsDao.six, Comparator.reverseOrder());
-        Comparator<IplRunnsDao> highFour = Comparator.comparing(iplRunnsDao -> iplRunnsDao.four, Comparator.reverseOrder());
-        Comparator<IplRunnsDao> highStrikingRates = Comparator.comparing(iplRunnsDao -> iplRunnsDao.strikingRates, Comparator.reverseOrder());
-        Comparator<IplRunnsDao> highRun = Comparator.comparing(iplRunnsDao -> iplRunnsDao.runs, Comparator.reverseOrder());
+        Comparator<IplTeamDao> highAverage = Comparator.comparing(iplRunnsDao -> iplRunnsDao.average, Comparator.reverseOrder());
+        Comparator<IplTeamDao> highSix = Comparator.comparing(iplRunnsDao -> iplRunnsDao.six, Comparator.reverseOrder());
+        Comparator<IplTeamDao> highFour = Comparator.comparing(iplRunnsDao -> iplRunnsDao.four, Comparator.reverseOrder());
+        Comparator<IplTeamDao> highStrikingRates = Comparator.comparing(iplRunnsDao -> iplRunnsDao.strikingRates, Comparator.reverseOrder());
+        Comparator<IplTeamDao> highRun = Comparator.comparing(iplRunnsDao -> iplRunnsDao.runs, Comparator.reverseOrder());
 
-        Comparator<IplRunnsDao> highSixFour = highSix.thenComparing(highFour);
-        Comparator<IplRunnsDao> strikingRatesWithSixFour = highStrikingRates.thenComparing(highSixFour);
-        Comparator<IplRunnsDao> highAverageWithStrikingRates = highAverage.thenComparing(highStrikingRates);
-        Comparator<IplRunnsDao> highRunAverage = highRun.thenComparing(highAverage);
+        Comparator<IplTeamDao> highSixFour = highSix.thenComparing(highFour);
+        Comparator<IplTeamDao> strikingRatesWithSixFour = highStrikingRates.thenComparing(highSixFour);
+        Comparator<IplTeamDao> highAverageWithStrikingRates = highAverage.thenComparing(highStrikingRates);
+        Comparator<IplTeamDao> highRunAverage = highRun.thenComparing(highAverage);
 
         this.comparatorHashMap.put(SortFieldIplRunns.AVERAGE, highAverage);
         this.comparatorHashMap.put(SortFieldIplRunns.STRIKING_RATES, highStrikingRates);
@@ -41,53 +38,22 @@ public class IPLFactAnalyserTeam {
         this.comparatorHashMap.put(SortFieldIplRunns.RUNS_AVERAGE, highRunAverage);
     }
 
-    public int loadBattingTeamData(String csvFilePath) throws IPLFactAnalyserException {
-        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<IplRunsCsv> csvFileIterartor = csvBuilder.getCSVFileIterartor(reader, IplRunsCsv.class);
-            Iterable<IplRunsCsv> csvIterable = () -> csvFileIterartor;
-            StreamSupport.stream(csvIterable.spliterator(), false)
-                    .map(IplRunsCsv.class::cast)
-                    .forEach(csvIplRun -> this.iplRunsCSVHashMap.put(csvIplRun.player, new IplRunnsDao(csvIplRun)));
-            return this.iplRunsCSVHashMap.size();
-        } catch (IOException | CSVBuilderException e) {
-            throw new IPLFactAnalyserException(e.getMessage(),
-                    IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
-        } catch (RuntimeException e) {
-            throw new IPLFactAnalyserException(e.getMessage(),
-                    IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE);
-        }
+    public int loadIplData(String csvFilePath) throws IPLFactAnalyserException, CSVBuilderException {
+        IPLAdapter iplAdapter = IPLTeamFactory.getIPLData(iplTeams);
+        Map<String, IplTeamDao> stringIplTeamDaoMap = iplAdapter.loadIplData(iplTeams, csvFilePath);
+        return stringIplTeamDaoMap.size();
     }
 
     public String getSortedData(SortFieldIplRunns sortBy) throws IPLFactAnalyserException {
-        if (iplRunsCSVHashMap == null || iplRunsCSVHashMap.size() == 0) {
+        if (iplCSVHashMap == null || iplCSVHashMap.size() == 0) {
             throw new IPLFactAnalyserException("No census Data",
                     IPLFactAnalyserException.ExceptionType.NO_CENSUS_DATA);
         }
-        ArrayList censusDTO = iplRunsCSVHashMap.values().stream()
+        ArrayList censusDTO = iplCSVHashMap.values().stream()
                 .sorted(this.comparatorHashMap.get(sortBy))
+                .map(censusDAO -> censusDAO.getDTO(iplTeams))
                 .collect(Collectors.toCollection(ArrayList::new));
         String sortedJson = new Gson().toJson(censusDTO);
         return sortedJson;
     }
-
-    public int loadBallingTeamData(String csvFilePath) throws IPLFactAnalyserException {
-        try ( Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));){
-            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<IplWktsCsv> csvFileIterartor = csvBuilder.getCSVFileIterartor(reader, IplWktsCsv.class);
-            Iterable<IplWktsCsv> csvIterable = () -> csvFileIterartor;
-            StreamSupport.stream(csvIterable.spliterator(), false)
-                    .map(IplWktsCsv.class::cast)
-                    .forEach(csvIplWkts->this.iplRunsCSVHashMap.put(csvIplWkts.player,new IplRunnsDao(csvIplWkts)));
-            return iplRunsCSVHashMap.size();
-        } catch (IOException | CSVBuilderException e) {
-            throw new IPLFactAnalyserException(e.getMessage(),
-                    IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
-        }catch (RuntimeException e) {
-            throw new IPLFactAnalyserException(e.getMessage(),
-                    IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE);
-        }
-    }
 }
-
-

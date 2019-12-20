@@ -1,6 +1,7 @@
 package com.iplfactssheet;
 
 import com.google.gson.Gson;
+import csvbuilder.CSVBuilderException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,274 +22,287 @@ public class IPLFactsSheetTest {
 
     @Test
     public void givenIPLFactsSheetOfMostRunsFile_WhenProper_ShouldGiveCorrectCount() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            int result = iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            int result = iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             Assert.assertEquals(100, result);
-        } catch (IPLFactAnalyserException e) {
-            e.printStackTrace();
-        }
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
+
     }
 
     @Test
     public void givenNoFile_ShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData("");
-        } catch (IPLFactAnalyserException e) {
+            iplFactAnalyserTeam.loadIplData("");
+        } catch (IPLFactAnalyserException  e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
-        }
+        } catch (CSVBuilderException e) {}
     }
 
     @Test
     public void givenEmptyFile_ShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(EMPTY_FILE);
+            iplFactAnalyserTeam.loadIplData(EMPTY_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
-        }
+        } catch (CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetOfMostRunsFile_WhenDelimeterIssue_ShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(DELIMETER_BATTING_FILE);
+            iplFactAnalyserTeam.loadIplData(DELIMETER_BATTING_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
-        }
+        } catch (CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetsOfMostRunsFile_WhenHeaderIssue_ShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(HEADER_BATTING_FILE);
+            iplFactAnalyserTeam.loadIplData(HEADER_BATTING_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
-        }
+        } catch (CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetOfMostRunsFile_WhenGivenFileTypeIsNotSupported_ShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(BATTING_FILE_TYPE_NOT_SUPPORTED);
+            iplFactAnalyserTeam.loadIplData(BATTING_FILE_TYPE_NOT_SUPPORTED);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
-        }
+        } catch (CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetOfMostRunsFile_WhenFilePathIsIncorrect_ShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(BATTING_FILE_PATH_INCORRECT);
+            iplFactAnalyserTeam.loadIplData(BATTING_FILE_PATH_INCORRECT);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
-        }
+        } catch (CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetOfMostRunsFile_WhenSortedOnAverage_ShouldReturnTopBattingAvearages() {
         try {
-            IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE);
             IplRunsCsv[] iplRunsCSV = new Gson().fromJson(sortedData, IplRunsCsv[].class);
             Assert.assertEquals("MS Dhoni", iplRunsCSV[0].player);
-        } catch (IPLFactAnalyserException e) {}
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetOfMostRunsFile_WhenSortedOnAverage_ShouldReturnLeastBattingAvearages() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE);
             IplRunsCsv[] iplRunsCSVS = new Gson().fromJson(sortedData, IplRunsCsv[].class);
             Assert.assertEquals("Harpreet Brar", iplRunsCSVS[iplRunsCSVS.length - 1].player);
-        } catch (IPLFactAnalyserException e) {}
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetOfMostRunnsFile_WhenSortedOnStrikingRates_ShouldReturnTopStrikingRates() {
         try {
-            IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKING_RATES);
             IplRunsCsv[] iplRunsCSV = new Gson().fromJson(sortedData, IplRunsCsv[].class);
             Assert.assertEquals("Ishant Sharma", iplRunsCSV[0].player);
-        } catch (IPLFactAnalyserException e) {}
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetOfMostRunnsFile_WhenSortedOnStrikingRates_ShouldReturnLeastStrikingRates() {
         try {
-            IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKING_RATES);
             IplRunsCsv[] iplRunsCSVS = new Gson().fromJson(sortedData, IplRunsCsv[].class);
             Assert.assertEquals("Bhuvneshwar Kumar", iplRunsCSVS[iplRunsCSVS.length - 1].player);
-        } catch (IPLFactAnalyserException e) {
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {
         }
     }
 
     @Test
     public void givenIPLFactsSheetsOfMostRunnsFile_WhenCompareSixAndFour_ShouldReturnPlayerHitMaximumSixAndFour() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SIX_AND_FOUR);
             IplRunsCsv[] iplRunsCSVS = new Gson().fromJson(sortedData, IplRunsCsv[].class);
             Assert.assertEquals("Andre Russell",iplRunsCSVS[0].player);
-        } catch (IPLFactAnalyserException e) {}
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetsOfMostRunnsFile_WhenCompareSixAndFour_ShouldReturnPlayerHitMinimumSixAndFour() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SIX_AND_FOUR);
             IplRunsCsv[] iplRunsCSVS = new Gson().fromJson(sortedData, IplRunsCsv[].class);
-            Assert.assertEquals("Shakib Al Hasan",iplRunsCSVS[iplRunsCSVS.length-1].player);
-        } catch (IPLFactAnalyserException e) {}
+            Assert.assertEquals("Shakib Al Hasan", iplRunsCSVS[iplRunsCSVS.length - 1].player);
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {
+        }
     }
+
 
     @Test
     public void givenIPLFactsSheetOfMostRunnsFile_WhenCompareStrikingRatesAndSixFour_ShouldReturnPalyerMaximumStrikingRatesWithSixFour() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SRTIKING_RATES_WITH_SIX_FOUR);
             IplRunsCsv[] iplRunsCSVS = new Gson().fromJson(sortedData, IplRunsCsv[].class);
             Assert.assertEquals("Ishant Sharma",iplRunsCSVS[0].player);
-        } catch (IPLFactAnalyserException e) {}
+        } catch (IPLFactAnalyserException |  CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetsOfMostRunnsFile_WhenCompareStrikingRatesAndSixFour_ShouldReturnPlayerMinimumStrikingRatesWithSixFour() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.SRTIKING_RATES_WITH_SIX_FOUR);
             IplRunsCsv[] iplRunsCSVS = new Gson().fromJson(sortedData, IplRunsCsv[].class);
             Assert.assertEquals("Bhuvneshwar Kumar",iplRunsCSVS[iplRunsCSVS.length-1].player);
-        } catch (IPLFactAnalyserException e) {}
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetsOfMostRunnsFile_WhenCompareAveargeAndStrikingRates_ShouldReturnPlayerMaximumAveargeWithStrikingRates() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE_STRIKING_RATES);
             IplRunsCsv[] iplRunsCSVS = new Gson().fromJson(sortedData, IplRunsCsv[].class);
             Assert.assertEquals("MS Dhoni",iplRunsCSVS[0].player);
-        } catch (IPLFactAnalyserException e) {}
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetOfMostRunnsFile_WhenCompareAverageWithStrikinhRates_ShouldReturnPlayerMinimumAveargeWithStrikingRates() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE_STRIKING_RATES);
             IplRunsCsv[] iplRunsCSVS = new Gson().fromJson(sortedData, IplRunsCsv[].class);
             Assert.assertEquals("Tim Southee",iplRunsCSVS[iplRunsCSVS.length-1].player);
-        } catch (IPLFactAnalyserException e) {}
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetMostOfRunnsFile_WhenCompareRunsAndAverage_ShouldReturnPlayerMaximumRunWithAverage() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.RUNS_AVERAGE);
             IplRunsCsv[] iplRunsCSVS = new Gson().fromJson(sortedData, IplRunsCsv[].class);
             Assert.assertEquals("David Warner",iplRunsCSVS[0].player);
-        } catch (IPLFactAnalyserException e) {}
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFatcsSheetsMostOfRunnsFile_WhenCompareRunsAndAverage_ShouldReturnPlayerMinimumRunWithAverage() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING);
         try {
-            iplFactAnalyserTeam.loadBattingTeamData(IPL_BATTING_TEAM);
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.RUNS_AVERAGE);
             IplRunsCsv[] iplRunsCSVS = new Gson().fromJson(sortedData, IplRunsCsv[].class);
             Assert.assertEquals("Tim Southee",iplRunsCSVS[iplRunsCSVS.length-1].player);
-        } catch (IPLFactAnalyserException e) {}
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetMostOfWktsFile_WhenGivenProper_ShouldReturnCorrectCount() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
         try {
-            int result = iplFactAnalyserTeam.loadBallingTeamData(IPL_BALLING_TEAM);
+            int result = iplFactAnalyserTeam.loadIplData(IPL_BALLING_TEAM);
             Assert.assertEquals(101,result);
-        } catch (IPLFactAnalyserException e) {}
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
     @Test
     public void givenNoFile_ProperlyShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
         try {
-            iplFactAnalyserTeam.loadBallingTeamData("");
+            iplFactAnalyserTeam.loadIplData("");
         } catch (IPLFactAnalyserException e) {
-            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
-        }
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE,e.type);
+        } catch (CSVBuilderException e) {}
     }
 
     @Test
     public void givenEmptyFile_ProperlyShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
         try {
-            iplFactAnalyserTeam.loadBallingTeamData(EMPTY_FILE);
+            iplFactAnalyserTeam.loadIplData(EMPTY_FILE);
         } catch (IPLFactAnalyserException e) {
-            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
-        }
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE,e.type);
+        } catch (CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetOfMostWktsFile_WhenDelimeterIssue_ShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
         try {
-            iplFactAnalyserTeam.loadBallingTeamData(DELIMETER_BALLING_FILE);
+            iplFactAnalyserTeam.loadIplData(DELIMETER_BALLING_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE,e.type);
-        }
+        } catch (CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactSheetsOfMostWktsFile_WhenHeaderIssue_ShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
         try {
-            iplFactAnalyserTeam.loadBallingTeamData(HEADER_BALLING_FILE);
+            iplFactAnalyserTeam.loadIplData(HEADER_BALLING_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE,e.type);
-        }
+        } catch (CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetOfMostWktsFile_WhenGivenFileTypeIsNotSupported_ShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
         try {
-            iplFactAnalyserTeam.loadBallingTeamData(BALLING_FILE_TYPE_NOT_SUPPORTED);
+            iplFactAnalyserTeam.loadIplData(BALLING_FILE_TYPE_NOT_SUPPORTED);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
-        }
+        } catch (CSVBuilderException e) {}
     }
 
     @Test
     public void givenIPLFactsSheetOfMostWktsFile_WhenFilePathIsIncorrect_ShouldHandleException() {
-        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
         try {
-            iplFactAnalyserTeam.loadBallingTeamData(BALLING_FILE_PATH_INCORRECT);
+            iplFactAnalyserTeam.loadIplData(BALLING_FILE_PATH_INCORRECT);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
-        }
+        } catch (CSVBuilderException e) {}
     }
+
+    @Test
+    public void givenIPLFactsSheetOfMostWktsFile_WhenSortedOnAverage_ShouldReturnTopBowlingAvearages() {
+        try {
+            IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
+            iplFactAnalyserTeam.loadIplData(IPL_BALLING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE);
+            IplRunsCsv[] iplRunsCSV = new Gson().fromJson(sortedData, IplRunsCsv[].class);
+            Assert.assertEquals("MS Dhoni", iplRunsCSV[0].player);
+        } catch (IPLFactAnalyserException e) {} catch (CSVBuilderException e) {}
+    }
+
 }
