@@ -2,7 +2,6 @@ package com.iplfactssheet;
 
 import com.google.gson.Gson;
 import csvbuilder.CSVBuilderException;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,8 +39,8 @@ public class IPLFactAnalyserTeam {
 
     public int loadIplData(String csvFilePath) throws IPLFactAnalyserException, CSVBuilderException {
         IPLAdapter iplAdapter = IPLTeamFactory.getIPLData(iplTeams);
-        Map<String, IplTeamDao> stringIplTeamDaoMap = iplAdapter.loadIplData(iplTeams, csvFilePath);
-        return stringIplTeamDaoMap.size();
+        iplCSVHashMap = (HashMap<String, IplTeamDao>) iplAdapter.loadIplData(csvFilePath);
+        return iplCSVHashMap.size();
     }
 
     public String getSortedData(SortFieldIplRunns sortBy) throws IPLFactAnalyserException {
@@ -51,7 +50,6 @@ public class IPLFactAnalyserTeam {
         }
         ArrayList censusDTO = iplCSVHashMap.values().stream()
                 .sorted(this.comparatorHashMap.get(sortBy))
-                .map(censusDAO -> censusDAO.getDTO(iplTeams))
                 .collect(Collectors.toCollection(ArrayList::new));
         String sortedJson = new Gson().toJson(censusDTO);
         return sortedJson;

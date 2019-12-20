@@ -3,35 +3,55 @@ package com.iplfactssheet;
 import com.opencsv.bean.CsvBindByName;
 
 public class IplWktsCsv {
+
     @CsvBindByName(column = "PLAYER", required = true)
     public String player;
 
     @CsvBindByName(column = "Mat", required = true)
-    public int matches;
+    public String  matchs;
 
     @CsvBindByName(column = "Inns", required = true)
-    public int innings;
+    public String innings;
 
     @CsvBindByName(column = "Ov", required = true)
-    public double over;
+    public String  over;
 
     @CsvBindByName(column = "Runs", required = true)
-    public int runs;
+    public String  runs;
 
     @CsvBindByName(column = "Wkts", required = true)
-    public int wkts;
+    public String  wkts;
 
     @CsvBindByName(column = "Avg", required = true)
-    public double average;
+    public String  average;
 
     @CsvBindByName(column = "4w", required = true)
-    public int fourWkts;
+    public String  fourWkts;
 
     @CsvBindByName(column = "5w", required = true)
-    public int fiveWkts;
+    public String  fiveWkts;
 
     @CsvBindByName(column = "SR",required = true)
-    public double strikingRate;
+    public String  strikingRates;
+
+    @CsvBindByName(column = "NA")
+    public String NA;
+
+    public IplWktsCsv() {
+    }
+
+    public IplWktsCsv(String player, String matches, String innings, String over, String runs, String wkts, String average, String fourWkts, String fiveWkts, String strikingRate) {
+        this.player = player;
+        this.matchs = matches;
+        this.innings = innings;
+        this.over = over;
+        this.runs = runs;
+        this.wkts = wkts;
+        this.average = average;
+        this.fourWkts = fourWkts;
+        this.fiveWkts = fiveWkts;
+        this.strikingRates = strikingRate;
+    }
 
     public IplWktsCsv(String player, int matchs, int innings, double over, int runs, int wkts, double average, int fourWkts, int fiveWkts, double strikingRates) {
     }
@@ -40,7 +60,7 @@ public class IplWktsCsv {
     public String toString() {
         return "IplWktsCsv{" +
                 "player='" + player + '\'' +
-                ", matches=" + matches +
+                ", matches=" + matchs +
                 ", innings=" + innings +
                 ", over=" + over +
                 ", runs=" + runs +
@@ -48,7 +68,7 @@ public class IplWktsCsv {
                 ", average=" + average +
                 ", fourWkts=" + fourWkts +
                 ", fiveWkts=" + fiveWkts +
-                ", strikingRate=" + strikingRate +
+                ", strikingRate=" + strikingRates +
                 '}';
     }
 }

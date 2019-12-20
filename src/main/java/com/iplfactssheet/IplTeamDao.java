@@ -33,20 +33,33 @@ public class IplTeamDao {
 
     public IplTeamDao(IplWktsCsv csvIplWkts) {
         player = csvIplWkts.player;
-        matchs = csvIplWkts.matches;
-        average = csvIplWkts.average;
-        innings = csvIplWkts.innings;
-        runs = csvIplWkts.runs;
-        over = csvIplWkts.over;
-        fourWkts = csvIplWkts.fourWkts;
-        fiveWkts = csvIplWkts.fiveWkts;
-        wkts = csvIplWkts.wkts;
-    }
+        matchs = Integer.parseInt(csvIplWkts.matchs);
+        if (csvIplWkts.average.contains("-")) {
+            average = 0;
+        }
+        if (!csvIplWkts.average.contains("-")) {
+            average = Double.parseDouble(csvIplWkts.average);
+        }
 
+        if (csvIplWkts.fourWkts.contains("-")) {
+            fourWkts = 0;
+        }
+        if (!csvIplWkts.average.contains("-")) {
+            fourWkts = Integer.parseInt(csvIplWkts.fourWkts);
+        }
 
-    public Object getDTO(IPLFactAnalyserTeam.IPLTeams iplTeams) {
-        if(iplTeams.equals(IPLFactAnalyserTeam.IPLTeams.BATTING))
-            return new IplRunsCsv(player,  matchs,  innings, runs, average, strikingRates, four,six);
-        return new IplWktsCsv(player,matchs,innings,over,runs,wkts,average,fourWkts,fiveWkts,strikingRates);
+        if (csvIplWkts.fiveWkts.contains("-")) {
+            fiveWkts = 0;
+        }
+        if (!csvIplWkts.average.contains("-")) {
+            fiveWkts = Integer.parseInt(csvIplWkts.fiveWkts);
+        }
+
+        if (csvIplWkts.strikingRates.contains("-")) {
+            strikingRates = 0;
+        }
+        if (!csvIplWkts.average.contains("-")) {
+            strikingRates = Double.parseDouble(csvIplWkts.strikingRates);
+        }
     }
 }
