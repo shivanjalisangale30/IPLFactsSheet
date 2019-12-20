@@ -18,17 +18,21 @@ public class IPLFactAnalyserTeam {
         this.comparatorHashMap = new HashMap<>();
         this.iplTeams = iplTeams;
 
-        Comparator<IplTeamDao> highAverage = Comparator.comparing(iplRunnsDao -> iplRunnsDao.average, Comparator.reverseOrder());
-        Comparator<IplTeamDao> highSix = Comparator.comparing(iplRunnsDao -> iplRunnsDao.six, Comparator.reverseOrder());
-        Comparator<IplTeamDao> highFour = Comparator.comparing(iplRunnsDao -> iplRunnsDao.four, Comparator.reverseOrder());
-        Comparator<IplTeamDao> highStrikingRates = Comparator.comparing(iplRunnsDao -> iplRunnsDao.strikingRates, Comparator.reverseOrder());
-        Comparator<IplTeamDao> highRun = Comparator.comparing(iplRunnsDao -> iplRunnsDao.runs, Comparator.reverseOrder());
-        Comparator<IplTeamDao> highEconomyRate = Comparator.comparing(iplRunnsDao -> iplRunnsDao.economyRate,Comparator.reverseOrder());
+        Comparator<IplTeamDao> highAverage = Comparator.comparing(iplTeamDao -> iplTeamDao.average, Comparator.reverseOrder());
+        Comparator<IplTeamDao> highSix = Comparator.comparing(iplTeamDao -> iplTeamDao.six, Comparator.reverseOrder());
+        Comparator<IplTeamDao> highFour = Comparator.comparing(iplTeamDao -> iplTeamDao.four, Comparator.reverseOrder());
+        Comparator<IplTeamDao> highStrikingRates = Comparator.comparing(iplTeamDao -> iplTeamDao.strikingRates, Comparator.reverseOrder());
+        Comparator<IplTeamDao> highRun = Comparator.comparing(iplTeamDao -> iplTeamDao.runs, Comparator.reverseOrder());
+        Comparator<IplTeamDao> highEconomyRate = Comparator.comparing(iplTeamDao -> iplTeamDao.economyRate,Comparator.reverseOrder());
+        Comparator<IplTeamDao> highFiveWkts = Comparator.comparing(iplTeamDao -> iplTeamDao.fiveWkts,Comparator.reverseOrder());
+        Comparator<IplTeamDao> highFourWkts = Comparator.comparing(iplTeamDao -> iplTeamDao.fourWkts,Comparator.reverseOrder());
 
         Comparator<IplTeamDao> highSixFour = highSix.thenComparing(highFour);
         Comparator<IplTeamDao> strikingRatesWithSixFour = highStrikingRates.thenComparing(highSixFour);
         Comparator<IplTeamDao> highAverageWithStrikingRates = highAverage.thenComparing(highStrikingRates);
         Comparator<IplTeamDao> highRunAverage = highRun.thenComparing(highAverage);
+        Comparator<IplTeamDao> highFiveFourWkts = highFiveWkts.thenComparing(highFourWkts);
+        Comparator<IplTeamDao> strikingRateWithFiveFourWkts = highStrikingRates.thenComparing(highFiveFourWkts);
 
         this.comparatorHashMap.put(SortFieldIplRunns.AVERAGE, highAverage);
         this.comparatorHashMap.put(SortFieldIplRunns.STRIKING_RATES, highStrikingRates);
@@ -37,6 +41,7 @@ public class IPLFactAnalyserTeam {
         this.comparatorHashMap.put(SortFieldIplRunns.AVERAGE_STRIKING_RATES, highAverageWithStrikingRates);
         this.comparatorHashMap.put(SortFieldIplRunns.RUNS_AVERAGE, highRunAverage);
         this.comparatorHashMap.put(SortFieldIplRunns.ECONOMY_RATE,highEconomyRate);
+        this.comparatorHashMap.put(SortFieldIplRunns.STRIKING_RATES_FIVE_FOUR_WKTS,strikingRateWithFiveFourWkts);
     }
 
     public int loadIplData(String csvFilePath) throws IPLFactAnalyserException, CSVBuilderException {
