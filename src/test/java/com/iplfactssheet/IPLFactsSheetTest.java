@@ -230,7 +230,7 @@ public class IPLFactsSheetTest {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
         try {
             int result = iplFactAnalyserTeam.loadIplData(IPL_BOWLING_TEAM);
-            Assert.assertEquals(101,result);
+            Assert.assertEquals(99,result);
         } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 
@@ -306,6 +306,16 @@ public class IPLFactsSheetTest {
     }
 
     @Test
+    public void givenIPLFactsSheetOfMostWktsFile_WhenSortedOnAverage_ShouldReturnLeastBowlingAvearages() {
+        try {
+            IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
+            iplFactAnalyserTeam.loadIplData(IPL_BOWLING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.AVERAGE);
+            IplWktsCsv[] iplWktsCsvs = new Gson().fromJson(sortedData, IplWktsCsv[].class);
+            Assert.assertEquals("Yusuf Pathan", iplWktsCsvs[iplWktsCsvs.length-1].player);
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
+    }
+    @Test
     public void givenIPLFactsSheetOfMostWktsFile_WhenSortedOn_ShouldReturnTopStrikingRatesOfBowler() {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
         try {
@@ -313,8 +323,39 @@ public class IPLFactsSheetTest {
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKING_RATES);
             IplWktsCsv[] iplWktsCsvs = new Gson().fromJson(sortedData, IplWktsCsv[].class);
             Assert.assertEquals("Krishnappa Gowtham",iplWktsCsvs[0].player);
-        } catch (IPLFactAnalyserException | CSVBuilderException e) {
-            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE,e.getMessage());
-        }
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostWktsFile_WhenSortedOn_ShouldReturnLeastStrikingRatesOfBowler() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
+        try {
+            iplFactAnalyserTeam.loadIplData(IPL_BOWLING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKING_RATES);
+            IplWktsCsv[] iplWktsCsvs = new Gson().fromJson(sortedData, IplWktsCsv[].class);
+            Assert.assertEquals("Yusuf Pathan",iplWktsCsvs[iplWktsCsvs.length-1].player);
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostWktsFile_WhenSorted_ShouldReturnTopEconomyRateOfBowler() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
+        try {
+            iplFactAnalyserTeam.loadIplData(IPL_BOWLING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.ECONOMY_RATE);
+            IplWktsCsv[] iplWktsCsvs = new Gson().fromJson(sortedData, IplWktsCsv[].class);
+            Assert.assertEquals("Ben Cutting",iplWktsCsvs[0].player);
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
+    }
+
+    @Test
+    public void givenIPLFactsSheetOfMostWktsFile_WhenSorted_ShouldReturnLeastEconomyRateOfBowler() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
+        try {
+            iplFactAnalyserTeam.loadIplData(IPL_BOWLING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.ECONOMY_RATE);
+            IplWktsCsv[] iplWktsCsvs = new Gson().fromJson(sortedData, IplWktsCsv[].class);
+            Assert.assertEquals("Shivam Dube",iplWktsCsvs[iplWktsCsvs.length-1].player);
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
 }

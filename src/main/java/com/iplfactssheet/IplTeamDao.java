@@ -14,6 +14,7 @@ public class IplTeamDao {
     public int fourWkts;
     public int fiveWkts;
     public int wkts;
+    public double economyRate;
 
     public IplTeamDao(IplRunsCsv iplRunsCSV) {
         player = iplRunsCSV.player;
@@ -60,6 +61,13 @@ public class IplTeamDao {
         }
         if (!csvIplWkts.average.contains("-")) {
             strikingRates = Double.parseDouble(csvIplWkts.strikingRates);
+        }
+
+        if (csvIplWkts.economyRate.contains("-")) {
+            economyRate = 0;
+        }
+        if (!csvIplWkts.economyRate.contains("-")) {
+            economyRate = Double.parseDouble(csvIplWkts.economyRate);
         }
     }
 }

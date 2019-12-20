@@ -34,15 +34,19 @@ public class IplWktsCsv {
     @CsvBindByName(column = "SR",required = true)
     public String  strikingRates;
 
+    @CsvBindByName(column = "Econ",required = true)
+    public String economyRate;
+
     @CsvBindByName(column = "NA")
     public String NA;
 
     public IplWktsCsv() {
     }
 
-    public IplWktsCsv(String player, String matches, String innings, String over, String runs, String wkts, String average, String fourWkts, String fiveWkts, String strikingRate) {
+    public IplWktsCsv(String player, String matchs, String innings, String over, String runs, String wkts, String average,
+                      String fourWkts, String fiveWkts, String strikingRates, String economyRate, String NA) {
         this.player = player;
-        this.matchs = matches;
+        this.matchs = matchs;
         this.innings = innings;
         this.over = over;
         this.runs = runs;
@@ -50,10 +54,13 @@ public class IplWktsCsv {
         this.average = average;
         this.fourWkts = fourWkts;
         this.fiveWkts = fiveWkts;
-        this.strikingRates = strikingRate;
+        this.strikingRates = strikingRates;
+        this.economyRate = economyRate;
+        this.NA = NA;
     }
 
-    public IplWktsCsv(String player, int matchs, int innings, double over, int runs, int wkts, double average, int fourWkts, int fiveWkts, double strikingRates) {
+    public IplWktsCsv(String player, int matchs, int innings, double over, int runs, int wkts,
+                      double average, int fourWkts, int fiveWkts, double strikingRates ,double economyRate) {
     }
 
     @Override
