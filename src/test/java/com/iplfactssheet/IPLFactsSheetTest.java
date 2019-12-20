@@ -304,4 +304,17 @@ public class IPLFactsSheetTest {
             Assert.assertEquals("Krishnappa Gowtham", iplWktsCsvs[0].player);
         } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
+
+    @Test
+    public void givenIPLFactsSheetOfMostWktsFile_WhenSortedOn_ShouldReturnTopStrikingRatesOfBowler() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BOWLING);
+        try {
+            iplFactAnalyserTeam.loadIplData(IPL_BOWLING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplRunns.STRIKING_RATES);
+            IplWktsCsv[] iplWktsCsvs = new Gson().fromJson(sortedData, IplWktsCsv[].class);
+            Assert.assertEquals("Krishnappa Gowtham",iplWktsCsvs[0].player);
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE,e.getMessage());
+        }
+    }
 }
