@@ -17,13 +17,13 @@ public class IplWktsCsv {
     public String  over;
 
     @CsvBindByName(column = "Runs", required = true)
-    public String  runs;
+    public String  bowlRuns;
 
     @CsvBindByName(column = "Wkts", required = true)
     public String  wkts;
 
     @CsvBindByName(column = "Avg", required = true)
-    public String  average;
+    public String  bowlAverage;
 
     @CsvBindByName(column = "4w", required = true)
     public String  fourWkts;
@@ -43,15 +43,15 @@ public class IplWktsCsv {
     public IplWktsCsv() {
     }
 
-    public IplWktsCsv(String player, String matchs, String innings, String over, String runs, String wkts, String average,
+    public IplWktsCsv(String player, String matchs, String innings, String over, String bowlRuns, String wkts, String bowlAverage,
                       String fourWkts, String fiveWkts, String strikingRates, String economyRate, String NA) {
         this.player = player;
         this.matchs = matchs;
         this.innings = innings;
         this.over = over;
-        this.runs = runs;
+        this.bowlRuns = bowlRuns;
         this.wkts = wkts;
-        this.average = average;
+        this.bowlAverage = bowlAverage;
         this.fourWkts = fourWkts;
         this.fiveWkts = fiveWkts;
         this.strikingRates = strikingRates;
@@ -59,8 +59,8 @@ public class IplWktsCsv {
         this.NA = NA;
     }
 
-    public IplWktsCsv(String player, int matchs, int innings, double over, int runs, int wkts,
-                      double average, int fourWkts, int fiveWkts, double strikingRates ,double economyRate) {
+    public IplWktsCsv(String player, int matchs, int innings, double over, int bowlRuns, int wkts,
+                      double bowlAverage, int fourWkts, int fiveWkts, double strikingRates ,double economyRate) {
     }
 
     @Override
@@ -70,9 +70,9 @@ public class IplWktsCsv {
                 ", matches=" + matchs +
                 ", innings=" + innings +
                 ", over=" + over +
-                ", runs=" + runs +
+                ", bowlRuns=" + bowlRuns +
                 ", wkts=" + wkts +
-                ", average=" + average +
+                ", bowlAverage=" + bowlAverage +
                 ", fourWkts=" + fourWkts +
                 ", fiveWkts=" + fiveWkts +
                 ", strikingRate=" + strikingRates +

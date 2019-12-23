@@ -5,8 +5,6 @@ public class IplTeamDao {
     public String player;
     public int matchs;
     public int innings;
-    public int runs;
-    public double average;
     public double strikingRates;
     public int four;
     public int six;
@@ -15,17 +13,21 @@ public class IplTeamDao {
     public int fiveWkts;
     public int wkts;
     public double economyRate;
+    public double batAaverage;
+    public double  bowlAverage;
+    public int bowlRuns;
+    public int batRuns;
 
     public IplTeamDao(IplRunsCsv iplRunsCSV) {
         player = iplRunsCSV.player;
         matchs = Integer.parseInt(iplRunsCSV.matchs);
         innings = Integer.parseInt(iplRunsCSV.innings);
-        runs = Integer.parseInt(iplRunsCSV.runs);
-        if (iplRunsCSV.average.contains("-")) {
-            average = 0;
+        batRuns = Integer.parseInt(iplRunsCSV.batRuns);
+        if (iplRunsCSV.batAaverage.contains("-")) {
+            batAaverage = 0;
         }
-        if (!iplRunsCSV.average.contains("-")) {
-            average = Double.parseDouble(iplRunsCSV.average);
+        if (!iplRunsCSV.batAaverage.contains("-")) {
+            batAaverage = Double.parseDouble(iplRunsCSV.batAaverage);
         }
         strikingRates = Double.parseDouble(iplRunsCSV.strikingRates);
         four = iplRunsCSV.four;
@@ -35,31 +37,32 @@ public class IplTeamDao {
     public IplTeamDao(IplWktsCsv csvIplWkts) {
         player = csvIplWkts.player;
         matchs = Integer.parseInt(csvIplWkts.matchs);
-        if (csvIplWkts.average.contains("-")) {
-            average = 0;
+
+        if (csvIplWkts.bowlAverage.contains("-")) {
+            bowlAverage = 0;
         }
-        if (!csvIplWkts.average.contains("-")) {
-            average = Double.parseDouble(csvIplWkts.average);
+        if (!csvIplWkts.bowlAverage.contains("-")) {
+            bowlAverage = Double.parseDouble(csvIplWkts.bowlAverage);
         }
 
         if (csvIplWkts.fourWkts.contains("-")) {
             fourWkts = 0;
         }
-        if (!csvIplWkts.average.contains("-")) {
+        if (!csvIplWkts.fourWkts.contains("-")) {
             fourWkts = Integer.parseInt(csvIplWkts.fourWkts);
         }
 
         if (csvIplWkts.fiveWkts.contains("-")) {
             fiveWkts = 0;
         }
-        if (!csvIplWkts.average.contains("-")) {
+        if (!csvIplWkts.fiveWkts.contains("-")) {
             fiveWkts = Integer.parseInt(csvIplWkts.fiveWkts);
         }
 
         if (csvIplWkts.strikingRates.contains("-")) {
             strikingRates = 0;
         }
-        if (!csvIplWkts.average.contains("-")) {
+        if (!csvIplWkts.strikingRates.contains("-")) {
             strikingRates = Double.parseDouble(csvIplWkts.strikingRates);
         }
 

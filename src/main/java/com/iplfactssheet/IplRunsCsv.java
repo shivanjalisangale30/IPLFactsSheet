@@ -13,10 +13,10 @@ public class IplRunsCsv {
     public String innings;
 
     @CsvBindByName(column = "Runs", required = true)
-    public String runs;
+    public String batRuns;
 
     @CsvBindByName(column = "Avg", required = true)
-    public String average;
+    public String batAaverage;
 
     @CsvBindByName(column = "SR", required = true)
     public String strikingRates;
@@ -30,18 +30,18 @@ public class IplRunsCsv {
     public IplRunsCsv() {
     }
 
-    public IplRunsCsv(String player, String matchs, String innings, String runs, String average, String strikingRates, int four, int six) {
+    public IplRunsCsv(String player, String matchs, String innings, String batRuns, String batAaverage, String strikingRates, int four, int six) {
         this.player = player;
         this.matchs = matchs;
         this.innings = innings;
-        this.runs = runs;
-        this.average = average;
+        this.batRuns = batRuns;
+        this.batAaverage = batAaverage;
         this.strikingRates = strikingRates;
         this.four = four;
         this.six = six;
     }
 
-    public IplRunsCsv(String player, int matchs, int innings, int runs, double average, double strikingRates, int four, int six) {
+    public IplRunsCsv(String player, int matchs, int innings, int batRuns, double batAaverage, double strikingRates, int four, int six) {
     }
 
     @Override
@@ -50,8 +50,8 @@ public class IplRunsCsv {
                 "player='" + player + '\'' +
                 ", matchs='" + matchs + '\'' +
                 ", innings='" + innings + '\'' +
-                ", runs='" + runs + '\'' +
-                ", average='" + average + '\'' +
+                ", batRuns='" + batRuns + '\'' +
+                ", batAaverage='" + batAaverage + '\'' +
                 ", strikingRates='" + strikingRates + '\'' +
                 ", four=" + four +
                 ", six=" + six +

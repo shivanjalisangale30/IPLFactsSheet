@@ -7,6 +7,8 @@ public class IPLTeamFactory {
             return new IPLRunnsAdapter();
         } else if (iplTeams.equals(IPLFactAnalyserTeam.IPLTeams.BOWLING)) {
             return new IPLWktsAdapter();
+        }else if (iplTeams.equals(IPLFactAnalyserTeam.IPLTeams.BATTING_BOWLING)){
+            return new IPLRunnsWktsAdapter();
         }
         throw new IPLFactAnalyserException("Unkonwn Input", IPLFactAnalyserException.ExceptionType.INVALID_INPUT);
     }

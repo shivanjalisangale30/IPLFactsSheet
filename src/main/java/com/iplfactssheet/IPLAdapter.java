@@ -17,10 +17,10 @@ public abstract class IPLAdapter {
 
     HashMap<String, IplTeamDao> iplRunsCSVHashMap = new HashMap<>();
 
-    public abstract Map<String, IplTeamDao> loadIplData(String csvFilePath) throws IPLFactAnalyserException, CSVBuilderException;
+    public abstract Map<String, IplTeamDao> loadIplData(String... csvFilePath) throws IPLFactAnalyserException, CSVBuilderException;
 
-    protected <E> Map<String, IplTeamDao> loadIplData(Class<E> iplCSVClass, String csvFilePath) throws CSVBuilderException, IPLFactAnalyserException {
-        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
+    protected <E> Map<String, IplTeamDao> loadIplData(Class<E> iplCSVClass, String... csvFilePath) throws CSVBuilderException, IPLFactAnalyserException {
+        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath[0]));) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
             Iterator<E> csvFileIterartor = csvBuilder.getCSVFileIterartor(reader, iplCSVClass);
             Iterable<E> csvIterable = () -> csvFileIterartor;
