@@ -19,7 +19,7 @@ public abstract class IPLAdapter {
 
     public abstract Map<String, IplTeamDao> loadIplData(String... csvFilePath) throws IPLFactAnalyserException, CSVBuilderException;
 
-    protected <E> Map<String, IplTeamDao> loadIplData(Class<E> iplCSVClass, String... csvFilePath) throws CSVBuilderException, IPLFactAnalyserException {
+    protected <E> HashMap<String, IplTeamDao> loadIplData(Class<E> iplCSVClass, String... csvFilePath) throws CSVBuilderException, IPLFactAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath[0]));) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
             Iterator<E> csvFileIterartor = csvBuilder.getCSVFileIterartor(reader, iplCSVClass);

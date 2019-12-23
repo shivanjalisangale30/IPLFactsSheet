@@ -8,6 +8,17 @@ import java.util.stream.Collectors;
 
 public class IPLFactAnalyserTeam {
 
+
+    private IPLAdapter iplAdapter;
+
+    public IPLFactAnalyserTeam() {
+
+    }
+
+    public void setIplAdapter(IPLAdapter iplAdapter) {
+        this.iplAdapter = iplAdapter;
+    }
+
     public enum IPLTeams {BATTING, BATTING_BOWLING, BOWLING};
 
     HashMap<String, IplTeamDao> iplCSVHashMap = null;
@@ -65,8 +76,7 @@ public class IPLFactAnalyserTeam {
     }
 
     public int loadIplData(String... csvFilePath) throws IPLFactAnalyserException, CSVBuilderException {
-        IPLAdapter iplAdapter = IPLTeamFactory.getIPLData(iplTeams);
-        iplCSVHashMap = (HashMap<String, IplTeamDao>) iplAdapter.loadIplData(csvFilePath);
+        this.iplCSVHashMap = (HashMap<String, IplTeamDao>) this.iplAdapter.loadIplData(csvFilePath);
         return this.iplCSVHashMap.size();
     }
 

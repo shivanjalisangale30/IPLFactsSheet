@@ -6,7 +6,7 @@ import csvbuilder.CSVBuilderException;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class IPLFactsSheetTest {
+public class IPLFactAnalyserTeamTest {
 
     String IPL_BATTING_TEAM = "/home/admin1/Desktop/IPL/src/test/resources/IPL2019FactsheetMostRuns.csv";
     String EMPTY_FILE = "/home/admin1/Desktop/IPL/src/test/resources/EmptyFile.csv";
@@ -429,13 +429,24 @@ public class IPLFactsSheetTest {
     }
 
     @Test
+    public void givenIPLFactsSheetsOfMostRunnsAndWktsFiles_WhenGivenCorrect_ShouldReturnCorrectCount() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING_BOWLING);
+        try {
+            int result = iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM, IPL_BOWLING_TEAM);
+           Assert.assertEquals(150,result);
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.getMessage());
+        }
+    }
+
+    @Test
     public void givenIPLFactsSheetsOfMostRunnsAndWktsFiles_WhenSorted_ShouldReturnMostBallingAndBattingAvearge() {
         IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING_BOWLING);
         try {
             iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM, IPL_BOWLING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplTeam.BALL_BAT_AVERAGE);
             IplTeamDao[] iplTeamDaos = new Gson().fromJson(sortedData, IplTeamDao[].class);
-            Assert.assertEquals("MS Dhoni",iplTeamDaos[iplTeamDaos.length-1].player);
+            Assert.assertEquals("Mayank Markande",iplTeamDaos[iplTeamDaos.length-1].player);
         } catch (IPLFactAnalyserException | CSVBuilderException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.getMessage());
         }
@@ -448,7 +459,7 @@ public class IPLFactsSheetTest {
             iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM, IPL_BOWLING_TEAM);
             String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplTeam.BALL_BAT_AVERAGE);
             IplTeamDao[] iplTeamDaos = new Gson().fromJson(sortedData, IplTeamDao[].class);
-            Assert.assertEquals("Krishnappa Gowtham",iplTeamDaos[0].player);
+            Assert.assertEquals("Shimron Hetmyer",iplTeamDaos[0].player);
         } catch (IPLFactAnalyserException | CSVBuilderException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.getMessage());
         }
