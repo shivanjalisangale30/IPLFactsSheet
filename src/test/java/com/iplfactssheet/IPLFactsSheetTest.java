@@ -453,4 +453,31 @@ public class IPLFactsSheetTest {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.getMessage());
         }
     }
+
+    @Test
+    public void givenIPLFactsSheetsOfMostRunnsAndWktsFiles_WhenSorted_ShouldReturnMostRunsAndWktsFile() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING_BOWLING);
+        try {
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM, IPL_BOWLING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplTeam.BALL_BAT_RUN_WKTS);
+            IplTeamDao[] iplTeamDaos = new Gson().fromJson(sortedData, IplTeamDao[].class);
+            Assert.assertEquals("David Warner",iplTeamDaos[0].player);
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.getMessage());
+        }
+    }
+
+    @Test
+    public void givenIPLFactsSheetsOfMostRunnsAndWktsFiles_WhenSorted_ShouldReturnLeastRunsAndWktsFile() {
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam(IPLFactAnalyserTeam.IPLTeams.BATTING_BOWLING);
+        try {
+            iplFactAnalyserTeam.loadIplData(IPL_BATTING_TEAM, IPL_BOWLING_TEAM);
+            String sortedData = iplFactAnalyserTeam.getSortedData(SortFieldIplTeam.BALL_BAT_RUN_WKTS);
+            IplTeamDao[] iplTeamDaos = new Gson().fromJson(sortedData, IplTeamDao[].class);
+            Assert.assertEquals("Mayank Markande",iplTeamDaos[iplTeamDaos.length-1].player);
+        } catch (IPLFactAnalyserException | CSVBuilderException e) {
+            Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.getMessage());
+        }
+    }
+
 }

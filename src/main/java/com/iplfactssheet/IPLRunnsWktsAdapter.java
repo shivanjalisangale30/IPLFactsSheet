@@ -14,6 +14,10 @@ public class IPLRunnsWktsAdapter extends IPLAdapter {
         iplWktsCSVHashMap.values().stream()
                 .filter(iplTeamDao -> iplRunsCSVHashMap.get(iplTeamDao.player) != null)
                 .forEach(iplTeamDao -> iplRunsCSVHashMap.get(iplTeamDao.player).bowlAverage = iplTeamDao.bowlAverage);
+        iplWktsCSVHashMap.values().stream()
+                .filter(iplTeamDao -> iplRunsCSVHashMap.get(iplTeamDao.player) != null)
+                .forEach(iplTeamDao -> iplRunsCSVHashMap.get(iplTeamDao.player).wkts = iplTeamDao.wkts);
+
         return iplRunsCSVHashMap;
     }
 }
