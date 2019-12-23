@@ -40,4 +40,21 @@ public class MokitoIplAdapterTest {
         Assert.assertEquals(1, iplTeamDaoHashMap.size());
 
     }
+
+    @Test
+    public void testBallIplAdapter() throws CSVBuilderException, IPLFactAnalyserException {
+        HashMap<String, IplTeamDao> iplTeamDaoHashMap = new HashMap<>();
+        IplTeamDao iplTeamDao1 = new IplTeamDao("Gambhir", 2, 5, 2.12, 2, 1, 2.6, 6,
+                5, 3, 56.5, 2.2, 5.21, 120,
+                130);
+        iplTeamDaoHashMap.put(String.valueOf(IPLFactAnalyserTeam.IPLTeams.BATTING), iplTeamDao1);
+        iplTeamDaoHashMap.put(String.valueOf(IPLFactAnalyserTeam.IPLTeams.BOWLING),iplTeamDao1);
+        IPLAdapter iplAdapter = mock(IPLAdapter.class);
+        when(iplAdapter.loadIplData(IplTeamDao.class,IPL_BOWLING_TEAM)).thenReturn(iplTeamDaoHashMap);
+        IPLFactAnalyserTeam iplFactAnalyserTeam = new IPLFactAnalyserTeam();
+        iplFactAnalyserTeam.setIplAdapter(iplAdapter);
+        int result = iplFactAnalyserTeam.loadIplData(IPL_BOWLING_TEAM);
+        Assert.assertEquals(2, iplTeamDaoHashMap.size());
+
+    }
 }
