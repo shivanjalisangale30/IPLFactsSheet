@@ -41,9 +41,6 @@ public class IplRunsCsv {
         this.six = six;
     }
 
-    public IplRunsCsv(String player, int matchs, int innings, int batRuns, double batAaverage, double strikingRates, int four, int six) {
-    }
-
     @Override
     public String toString() {
         return "IPLRunsCSV{" +

@@ -75,17 +75,17 @@ public class IPLFactAnalyserTeam {
         this.comparatorHashMap.put(SortFieldIplTeam.BALL_BAT_RUN_WKTS,highRunWkts);
     }
 
-    public int loadIplData(String... csvFilePath) throws IPLFactAnalyserException, CSVBuilderException {
-        this.iplCSVHashMap = (HashMap<String, IplTeamDao>) this.iplAdapter.loadIplData(csvFilePath);
+    public int loadIplData(IPLTeams iplTeams,String... csvFilePath) throws IPLFactAnalyserException, CSVBuilderException {
+        this.iplCSVHashMap = (HashMap<String, IplTeamDao>) this.iplAdapter.loadIplData(iplTeams,csvFilePath);
         return this.iplCSVHashMap.size();
     }
 
     public String getSortedData(SortFieldIplTeam sortBy) throws IPLFactAnalyserException {
-        if (iplCSVHashMap == null || iplCSVHashMap.size() == 0) {
+        if (this.iplCSVHashMap == null || this.iplCSVHashMap.size() == 0) {
             throw new IPLFactAnalyserException("No census Data",
                     IPLFactAnalyserException.ExceptionType.NO_CENSUS_DATA);
         }
-        ArrayList censusDTO = iplCSVHashMap.values().stream()
+        ArrayList censusDTO = this.iplCSVHashMap.values().stream()
                 .sorted(this.comparatorHashMap.get(sortBy))
                 .collect(Collectors.toCollection(ArrayList::new));
         String sortedJson = new Gson().toJson(censusDTO);

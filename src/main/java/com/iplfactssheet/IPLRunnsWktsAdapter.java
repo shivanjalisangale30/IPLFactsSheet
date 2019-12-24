@@ -7,7 +7,7 @@ import java.util.Map;
 public class IPLRunnsWktsAdapter extends IPLAdapter {
 
     @Override
-    public Map<String, IplTeamDao> loadIplData(String... csvFilePath) throws IPLFactAnalyserException, CSVBuilderException {
+    public Map<String, IplTeamDao> loadIplData(IPLFactAnalyserTeam.IPLTeams iplTeams, String... csvFilePath) throws IPLFactAnalyserException, CSVBuilderException {
         Map<String, IplTeamDao> iplRunsCSVHashMap = super.loadIplData(IplRunsCsv.class,csvFilePath[0]);
         Map<String, IplTeamDao> iplWktsCSVHashMap = super.loadIplData(IplWktsCsv.class, csvFilePath[1]);
         iplWktsCSVHashMap.values().stream()

@@ -14,28 +14,9 @@ public class IplTeamDao {
     public int wkts;
     public double economyRate;
     public double batAaverage;
-    public double  bowlAverage;
+    public double bowlAverage;
     public int bowlRuns;
     public int batRuns;
-
-    public IplTeamDao(String player, int matchs, int innings, double strikingRates, int four, int six, double over,
-                      int fourWkts, int fiveWkts, int wkts, double economyRate, double batAaverage, double bowlAverage, int bowlRuns, int batRuns) {
-        this.player = player;
-        this.matchs = matchs;
-        this.innings = innings;
-        this.strikingRates = strikingRates;
-        this.four = four;
-        this.six = six;
-        this.over = over;
-        this.fourWkts = fourWkts;
-        this.fiveWkts = fiveWkts;
-        this.wkts = wkts;
-        this.economyRate = economyRate;
-        this.batAaverage = batAaverage;
-        this.bowlAverage = bowlAverage;
-        this.bowlRuns = bowlRuns;
-        this.batRuns = batRuns;
-    }
 
     public IplTeamDao(IplRunsCsv iplRunsCSV) {
         player = iplRunsCSV.player;
@@ -51,6 +32,7 @@ public class IplTeamDao {
         strikingRates = Double.parseDouble(iplRunsCSV.strikingRates);
         four = iplRunsCSV.four;
         six = iplRunsCSV.six;
+
     }
 
     public IplTeamDao(IplWktsCsv csvIplWkts) {
@@ -92,5 +74,4 @@ public class IplTeamDao {
             economyRate = Double.parseDouble(csvIplWkts.economyRate);
         }
     }
-
 }
