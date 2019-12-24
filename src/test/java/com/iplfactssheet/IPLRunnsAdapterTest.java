@@ -19,7 +19,7 @@ public class IPLRunnsAdapterTest {
     public void givenIPLRunCsvFile_WhenProper_ShouldGiveCorrectCount() {
         try {
             IPLRunnsAdapter iplRunnsAdapter = new IPLRunnsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(IPL_BATTING_TEAM);
+            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BATTING,IPL_BATTING_TEAM);
             Assert.assertEquals(100,stringIplTeamDaoMap.size() );
         } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
@@ -28,7 +28,7 @@ public class IPLRunnsAdapterTest {
     public void givenNoFile_ShouldHandleException() {
         try {
             IPLRunnsAdapter iplRunnsAdapter = new IPLRunnsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData("");
+            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BATTING,"");
         } catch (IPLFactAnalyserException  e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
         } catch (CSVBuilderException e) {}
@@ -38,7 +38,7 @@ public class IPLRunnsAdapterTest {
     public void givenEmptyFile_ShouldHandleException() {
         try {
             IPLRunnsAdapter iplRunnsAdapter = new IPLRunnsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(EMPTY_FILE);
+            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BATTING,EMPTY_FILE);
         }
         catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
@@ -49,7 +49,7 @@ public class IPLRunnsAdapterTest {
     public void givenIPLRunCsvFile_WhenDelimeterIssue_ShouldHandleException() {
         try {
             IPLRunnsAdapter iplRunnsAdapter = new IPLRunnsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(DELIMETER_BATTING_FILE);
+            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BATTING,DELIMETER_BATTING_FILE);
         }
         catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
@@ -60,7 +60,7 @@ public class IPLRunnsAdapterTest {
     public void givenIPLFactsSheetsOfMostRunsFile_WhenHeaderIssue_ShouldHandleException() {
         try {
             IPLRunnsAdapter iplRunnsAdapter = new IPLRunnsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(HEADER_BATTING_FILE);
+            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BATTING,HEADER_BATTING_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
         } catch (CSVBuilderException e) {}
@@ -70,7 +70,7 @@ public class IPLRunnsAdapterTest {
     public void givenIPLFactsSheetOfMostRunsFile_WhenGivenFileTypeIsNotSupported_ShouldHandleException() {
         try {
             IPLRunnsAdapter iplRunnsAdapter = new IPLRunnsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(BATTING_FILE_TYPE_NOT_SUPPORTED);
+            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BATTING,BATTING_FILE_TYPE_NOT_SUPPORTED);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
         } catch (CSVBuilderException e) {}
@@ -80,7 +80,7 @@ public class IPLRunnsAdapterTest {
     public void givenIPLFactsSheetOfMostRunsFile_WhenFilePathIsIncorrect_ShouldHandleException() {
         try {
             IPLRunnsAdapter iplRunnsAdapter = new IPLRunnsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(BATTING_FILE_PATH_INCORRECT);
+            Map<String, IplTeamDao> stringIplTeamDaoMap = iplRunnsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BATTING,BATTING_FILE_PATH_INCORRECT);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
         } catch (CSVBuilderException e) {}

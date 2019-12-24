@@ -20,7 +20,7 @@ public class IplWktsAdapterTest {
     public void givenIPLWktsCsvFile_WhenProper_ShouldGiveCorrectCount() {
         try {
             IPLWktsAdapter iplWktsAdapter = new IPLWktsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(IPL_BOWLING_TEAM);
+            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BOWLING,IPL_BOWLING_TEAM);
             Assert.assertEquals(99,stringIplTeamDaoMap1.size() );
         } catch (IPLFactAnalyserException | CSVBuilderException e) {}
     }
@@ -29,7 +29,7 @@ public class IplWktsAdapterTest {
     public void givenNoFile_ShouldHandleException() {
         try {
             IPLWktsAdapter iplWktsAdapter = new IPLWktsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData("");
+            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BOWLING,"");
         } catch (IPLFactAnalyserException  e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
         } catch (CSVBuilderException e) {}
@@ -39,7 +39,7 @@ public class IplWktsAdapterTest {
     public void givenEmptyFile_ShouldHandleException() {
         try {
             IPLWktsAdapter iplWktsAdapter = new IPLWktsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(EMPTY_FILE);
+            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BOWLING,EMPTY_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
         } catch (CSVBuilderException e) {}
@@ -49,7 +49,7 @@ public class IplWktsAdapterTest {
     public void givenIPLWktsCsvFile_WhenDelimeterIssue_ShouldHandleException() {
         try {
             IPLWktsAdapter iplWktsAdapter = new IPLWktsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(DELIMETER_BALLING_FILE);
+            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BOWLING,DELIMETER_BALLING_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
         } catch (CSVBuilderException e) {}
@@ -59,7 +59,7 @@ public class IplWktsAdapterTest {
     public void givenIPLFactsSheetsOfMostWktsFile_WhenHeaderIssue_ShouldHandleException() {
         try {
             IPLWktsAdapter iplWktsAdapter = new IPLWktsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(HEADER_BALLING_FILE);
+            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BOWLING,HEADER_BALLING_FILE);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.SOME_FILE_ISSUE, e.type);
         } catch (CSVBuilderException e) {}
@@ -69,7 +69,7 @@ public class IplWktsAdapterTest {
     public void givenIPLFactsSheetOfMostWktsFile_WhenGivenFileTypeIsNotSupported_ShouldHandleException() {
         try {
             IPLWktsAdapter iplWktsAdapter = new IPLWktsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(BALLING_FILE_TYPE_NOT_SUPPORTED);
+            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BOWLING,BALLING_FILE_TYPE_NOT_SUPPORTED);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
         } catch (CSVBuilderException e) {}
@@ -79,7 +79,7 @@ public class IplWktsAdapterTest {
     public void givenIPLFactsSheetOfMostWktsFile_WhenFilePathIsIncorrect_ShouldHandleException() {
         try {
             IPLWktsAdapter iplWktsAdapter = new IPLWktsAdapter();
-            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(BALLING_FILE_PATH_INCORRECT);
+            Map<String, IplTeamDao> stringIplTeamDaoMap1 = iplWktsAdapter.loadIplData(IPLFactAnalyserTeam.IPLTeams.BOWLING,BALLING_FILE_PATH_INCORRECT);
         } catch (IPLFactAnalyserException e) {
             Assert.assertEquals(IPLFactAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM, e.type);
         } catch (CSVBuilderException e) {}
