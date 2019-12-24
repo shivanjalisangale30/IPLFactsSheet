@@ -1,5 +1,7 @@
 package com.iplfactssheet;
 
+import com.opencsv.bean.CsvBindByName;
+
 public class IplTeamDao {
 
     public String player;
@@ -8,7 +10,6 @@ public class IplTeamDao {
     public double strikingRates;
     public int four;
     public int six;
-    public double over;
     public int fourWkts;
     public int fiveWkts;
     public int wkts;

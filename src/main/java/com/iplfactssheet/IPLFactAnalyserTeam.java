@@ -25,7 +25,7 @@ public class IPLFactAnalyserTeam {
     HashMap<SortFieldIplTeam, Comparator<IplTeamDao>> comparatorHashMap = null;
     IPLTeams iplTeams;
 
-    public IPLFactAnalyserTeam(IPLTeams iplTeams) {
+    public IPLFactAnalyserTeam(IPLTeams iplTeams ) {
         this.iplCSVHashMap = new HashMap<>();
         this.comparatorHashMap = new HashMap<>();
         this.iplTeams = iplTeams;
